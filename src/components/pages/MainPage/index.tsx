@@ -12,7 +12,7 @@ import { useFlow } from 'src/utils/stackflow';
 const MainPage: ActivityComponentType = () => {
   const { push } = useFlow();
   
-  const gotoDetailPage = (id: number) => {
+  const goToDetailPage = (id: number) => {
     push('DetailPage', {id: id.toString()});
   }
 
@@ -30,7 +30,13 @@ const MainPage: ActivityComponentType = () => {
   return <AppScreen appBar={{ appendLeft: MainPageAppBarLeft, appendRight: MainPageAppBarRight }}>
     <ItemsWrapper>
       {products.map((product) => {
-        return (<ProductItem key={product.id} item={product} onClickItem={() => console.log('check')}/> )
+        return (
+        <ProductItem 
+        key={product.id} 
+        item={product} 
+        onClickItem={() => goToDetailPage(product.id)}
+        /> 
+        )
       })}
     </ItemsWrapper>
     <Footer />
