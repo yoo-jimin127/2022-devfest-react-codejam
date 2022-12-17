@@ -6,6 +6,7 @@ import { getProductData } from 'src/services/product';
 import { getUserData } from 'src/services/user';
 import { useFlow } from 'src/utils/stackflow';
 import styled from 'styled-components';
+import OtherItems from './components/OtherItems';
 import ProductDetail from './components/ProductDetail';
 import UserProfile from './components/UserProfile';
 
@@ -49,6 +50,7 @@ const DetailPage: React.FC<DetailParams> = ({ params: { id } }) => {
         </ProductImageWrapper>
         <UserProfile {...user} />
         <ProductDetail {...product} />
+        <OtherItems userName={user.userName} other={user.other} />
       </section>
     )}
   </AppScreen>
