@@ -1,11 +1,21 @@
 import { AppScreen } from '@stackflow/plugin-basic-ui';
 import { ActivityComponentType } from '@stackflow/react';
 import React from 'react';
-import { MainPageAppBarLeft } from 'src/components/common/Stackflow';
+import Footer from 'src/components/common/Footer';
+import ProductItem from 'src/components/common/ProductItem';
+import { MainPageAppBarLeft, MainPageAppBarRight } from 'src/components/common/Stackflow';
 import { ProductInterface } from 'src/schemas/Product';
 import { getProductList } from 'src/services/product';
+import { ItemsWrapper } from './styled';
+import { useFlow } from 'src/utils/stackflow';
 
 const MainPage: ActivityComponentType = () => {
+  const { push } = useFlow();
+  
+  const gotoDetailPage = (id: number) => {
+    push('DetailPage', {id: id.toString()});
+  }
+
   const [products, setProducts] = React.useState<ProductInterface[]>([]);
   
   const loadProducts = async () => {
@@ -17,7 +27,14 @@ const MainPage: ActivityComponentType = () => {
     loadProducts();
   }, []);
 
-  return <AppScreen appBar={{appendLeft: MainPageAppBarLeft}}><div>s</div></AppScreen>;
+  return <AppScreen appBar={{ appendLeft: MainPageAppBarLeft, appendRight: MainPageAppBarRight }}>
+    <ItemsWrapper>
+      {products.map((product) => {
+        return (<ProductItem key={product.id} item={product} onClickItem={() => console.log('check')}/> )
+      })}
+    </ItemsWrapper>
+    <Footer />
+    </AppScreen>;
 };
 
 export default MainPage;
